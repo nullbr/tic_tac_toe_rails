@@ -1,0 +1,22 @@
+<header>
+  <nav>
+    <ul class="flex justify-end gap-2 pt-2 px-4 text-slate-300">
+      <% if signed_in? %>
+        <li>
+          <%= nav_link_to current_user.username, current_user %>
+        </li>
+        <li>
+          <%= button_to "Sign Out", session_path, method: :delete %>
+        </li>
+      <% else %>
+        <li>
+          <%= nav_link_to "Sign In", signin_path %>
+        </li>
+        <li>
+          <%= nav_link_to "Sign Up", signup_path %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+  <div class="text-3xl flex justify-center items-center uppercase py-4 font-bold text-primary">tic tac toe</div>
+</header>
