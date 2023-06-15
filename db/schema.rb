@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_215834) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_234912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_players", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_players_on_game_id"
+    t.index ["player_id"], name: "index_game_players_on_player_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.integer "mode"
@@ -27,13 +36,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_215834) do
     t.integer "moves"
   end
 
-  create_table "user_games", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "game_id", null: false
+  create_table "players", force: :cascade do |t|
+    t.integer "player_type"
+    t.string "username"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_user_games_on_game_id"
-    t.index ["user_id"], name: "index_user_games_on_user_id"
+    t.string "symbol", null: false
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_215834) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "user_games", "games"
-  add_foreign_key "user_games", "users"
+  add_foreign_key "game_players", "games"
+  add_foreign_key "game_players", "players"
+  add_foreign_key "players", "users"
 end

@@ -3,8 +3,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  has_many :user_games, dependent: :destroy
-  has_many :games, through: :user_games, dependent: :destroy
+  has_one :player, dependent: :destroy
 
   validates :username, presence: true, uniqueness: { case_sensitive: false }
 end

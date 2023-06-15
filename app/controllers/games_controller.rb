@@ -16,11 +16,12 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.new(start_at: Time.zone.now, mode: game_params[:mode]&.to_i, level: game_params[:level]&.to_i)
-    @game.users = [current_user] if signed_in?
 
-    render :new, status: :unprocessable_entity unless @game.save
+    player1 = Player.create!(symbol: 'X', player_type: 'Human')
+    player2 = Player.create!(symbol: 'O', player_type: 'Human')
+    @game.players = [player1, player2]
 
-    redirect_to @game
+    @game.save ? (redirect_to @game) : (render :new, status: :unprocessable_entity)
   end
 
   def update_board; end
