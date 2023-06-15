@@ -5,6 +5,9 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    @row1 = @game.board[0..2]
+    @row2 = @game.board[3..5]
+    @row3 = @game.board[6..9]
   end
 
   def new
@@ -19,6 +22,8 @@ class GamesController < ApplicationController
 
     redirect_to @game
   end
+
+  def update_board; end
 
   private
 

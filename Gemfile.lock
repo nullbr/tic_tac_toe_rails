@@ -88,6 +88,10 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.12.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -128,6 +132,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.2-arm64-darwin)
       racc (~> 1.4)
+    pg (1.5.3)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -180,7 +185,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.3-arm64-darwin)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.29-arm64-darwin)
@@ -218,14 +222,15 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  dotenv-rails
   importmap-rails
   jbuilder
+  pg
   puma (~> 5.0)
   rails (~> 7.0.5)
   redis (~> 4.0)
   selenium-webdriver
   sprockets-rails
-  sqlite3 (~> 1.4)
   stimulus-rails
   tailwindcss-rails (~> 2.0)
   turbo-rails

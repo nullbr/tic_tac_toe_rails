@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_192159) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_215834) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "games", force: :cascade do |t|
     t.integer "mode"
     t.integer "level"
@@ -18,6 +21,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_192159) do
     t.datetime "updated_at", null: false
     t.datetime "start_at"
     t.datetime "end_at"
+    t.text "board", default: [nil, nil, nil, nil, nil, nil, nil, nil, nil], array: true
+    t.bigint "current_player"
+    t.string "win_type"
+    t.integer "moves"
   end
 
   create_table "user_games", force: :cascade do |t|

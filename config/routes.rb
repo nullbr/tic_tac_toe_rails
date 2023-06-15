@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   get 'signup' => 'users#new'
 
-  resources :games, only: %i[index new create show]
+  resources :games, only: %i[index new create show] do
+    post 'update_board' => 'games#update_board'
+  end
 end
