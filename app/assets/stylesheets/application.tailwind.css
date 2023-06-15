@@ -3,11 +3,133 @@
 @tailwind utilities;
 
 @layer components {
-  a {
-    @apply hover:scale-110 hover:text-blue-300 duration-500;
+  /* Text */
+
+  h2 {
+    @apply text-primary text-3xl font-bold text-center uppercase;
   }
 
-  form {
-    @apply flex flex-col p-6;
+  /* Links */
+
+  a {
+    @apply hover:scale-110 hover:text-primary text-blue-300 duration-500;
+  }
+
+  /* Buttons */
+
+  .btn {
+    @apply w-full py-2 px-4 border border-transparent text-sm font-semibold rounded-md text-white bg-blue-500 transition duration-150 ease-in-out shadow-md cursor-pointer;
+  }
+
+  .btn:focus {
+    @apply outline-none border-blue-700 ring-2 ring-offset-2 ring-blue-300;
+  }
+
+  .btn:active {
+    @apply bg-blue-700;
+  }
+
+  .btn:hover {
+    @apply bg-blue-600;
+  }
+
+  .actions {
+    @apply mt-6 flex items-center justify-center space-x-4;
+
+    & .btn-danger {
+      @apply bg-red-500 text-white;
+
+      &:hover {
+        @apply bg-red-400;
+      }
+
+      &:active {
+        @apply bg-red-600;
+      }
+    }
+  }
+
+  /* Flashes */
+
+  .flashes {
+    @apply flex flex-col;
+  }
+
+  .flash {
+    @apply text-center text-sm px-4 py-2 my-2 font-medium rounded-md;
+
+    &.notice,
+    &.success {
+      @apply bg-green-200 text-green-900;
+    }
+
+    &.error,
+    &.alert {
+      @apply bg-red-300 text-red-900;
+    }
+  }
+
+  /* Form Inputs */
+
+  form.user-form {
+    @apply flex flex-col lg:w-96 mx-auto;
+
+    & label {
+      @apply block mb-2 text-sm font-semibold text-gray-700;
+    }
+
+    & input[type="text"],
+    & input[type="search"],
+    & input[type="number"],
+    & input[type="password"] {
+      @apply mb-4 w-full appearance-none relative block shadow-sm px-3 py-2 border border-gray-300 text-gray-900 rounded-lg transition duration-150 ease-in-out text-sm;
+    }
+
+    & input[type="text"]:focus,
+    & input[type="search"]:focus,
+    & input[type="number"]:focus,
+    & input[type="password"]:focus {
+      @apply outline-none ring-1 ring-blue-300 border-blue-300;
+    }
+
+    & button[type="submit"],
+    & input[type="submit"] {
+      @apply w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 transition duration-150 ease-in-out shadow-sm cursor-pointer;
+    }
+
+    & button[type="submit"]:focus,
+    & input[type="submit"]:focus {
+      @apply outline-none border-blue-700 ring-2 ring-offset-2 ring-blue-300;
+    }
+
+    & button[type="submit"]:active,
+    & input[type="submit"]:active {
+      @apply bg-blue-700;
+    }
+
+    & button[type="submit"]:hover,
+    & input[type="submit"]:hover {
+      @apply bg-blue-600;
+    }
+
+    & select {
+      @apply w-full appearance-none relative block shadow-sm py-2 text-lg border-gray-300 rounded-md;
+    }
+
+    & select:focus {
+      @apply outline-none ring-1 ring-blue-300 border-blue-300;
+    }
+
+    & .field-with-errors {
+      & input,
+      & textarea,
+      & select {
+        @apply border-red-300;
+      }
+
+      & .error {
+        @apply block text-red-700 text-sm;
+      }
+    }
   }
 }

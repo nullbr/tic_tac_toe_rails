@@ -1,0 +1,14 @@
+<div class="flex flex-col justify-center items-center">
+  <h2 class="text-2xl text-primary"><%= @user.username %></h2>
+  <% if current_user?(@user) %>
+    <div class="actions">
+      <div>
+        <%= link_to "Edit Account", edit_user_path(@user), class: "btn" %>
+      </div>
+      <div>
+        <%= button_to "Delete Account", @user, method: :delete,
+                    class: "btn btn-danger" %>
+      </div>
+    </div>
+  <% end %>
+</div>

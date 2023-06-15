@@ -1,0 +1,10 @@
+<%= tag.div id: dom_id(user) do %>
+  <div class="user">
+    <div class="username">
+      <%= user.username %>
+    </div>
+    <div class="created">
+      <%= time_ago_in_words(user.created_at) %>
+    </div>
+  </div>
+<% end %>
