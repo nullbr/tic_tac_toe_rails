@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 @layer components {
-  nav ul li {
-    @apply hover:scale-105 hover:text-primary duration-500;
+  a {
+    @apply hover:scale-110 hover:text-blue-300 duration-500;
+  }
+
+  form {
+    @apply flex flex-col p-6;
   }
 }
