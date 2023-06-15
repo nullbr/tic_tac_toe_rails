@@ -2,8 +2,10 @@
   <%= form_with(model: @user, class: "user-form") do |f| %>
     <%= f.label :username %>
     <%= f.text_field :username %>
-    <%= f.label :current_password, 'Current Password' %>
-    <%= f.password_field :current_password %>
+    <% unless @user.new_record? %>
+      <%= f.label :current_password, 'Current Password' %>
+      <%= f.password_field :current_password %>
+    <% end %>
     <%= f.label :password, 'Password' %>
     <%= f.password_field :password %>
     <%= f.label :password_confirmation, 'Confirm Password' %>

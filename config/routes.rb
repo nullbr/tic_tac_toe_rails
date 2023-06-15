@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'signin' => 'sessions#new'
   get 'signout' => 'sessions#signout'
 
-  resources :users
+  resources :users, except: [:index]
   get 'signup' => 'users#new'
 
   resources :games, only: [:index]
