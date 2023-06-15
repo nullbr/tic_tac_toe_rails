@@ -1,0 +1,15 @@
+<div class="flex flex-col gap-2">
+  <h2>New Game</h2>
+  <h3 class="text-slate-400 text-center text-lg">
+    Choose the desired game settings
+  </h3>
+  <%= form_with(model: @game, class: "user-form", data: { controller: "game-mode", action: "input->game-mode#eval" } ) do |f| %>
+    <%= f.label :mode %>
+    <%= f.select :mode, Game.modes, { autofocus: true, required: true }, data: { game_mode_target: "mode" } %>
+    <div class="hidden" data-game-mode-target="level">
+      <%= f.label :level %>
+      <%= f.select :level, Game.levels, selected: nil %>
+    </div>
+    <%= f.submit "Start Game" %>
+  <% end %>
+</div>

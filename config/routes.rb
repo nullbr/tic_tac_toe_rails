@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   get 'signup' => 'users#new'
 
-  resources :games, only: [:index]
+  resources :games, only: %i[index new create show]
 end
