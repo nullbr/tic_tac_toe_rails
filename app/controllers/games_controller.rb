@@ -5,9 +5,11 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @row1 = @game.board[0..2]
-    @row2 = @game.board[3..5]
-    @row3 = @game.board[6..9]
+    @rows = @game.board.each_slice(3)
+
+    return unless (@game_over = @game.game_over?)
+
+    @win_pattern = JSON.parse(@game.win_type)['pattern']
   end
 
   def new

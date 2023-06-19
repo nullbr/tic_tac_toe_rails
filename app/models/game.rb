@@ -11,10 +11,17 @@ class Game < ApplicationRecord
 
   after_create :set_current_player
 
+  # Determine the possible types of game finish
+  FINISH_TYPES = [
+    { patterns: [[0, 4, 8], [2, 4, 6]], name: 'Diagonal' },
+    { patterns: [[0, 3, 6], [1, 4, 7], [2, 5, 8]], name: 'Vertical' },
+    { patterns: [[0, 1, 2], [3, 4, 5], [6, 7, 8]], name: 'Horizontal' }
+  ].freeze
+
   # returns false if input is invalid
   # return true and calls next player if valid
   def input_to_board(spot)
-    return false unless spot_valid?(spot)
+    return false unless spot_valid?(spot) && win_type.nil?
 
     board[spot.to_i] = current_player.symbol
     self.moves = moves + 1
@@ -23,8 +30,24 @@ class Game < ApplicationRecord
 
     # calls next player
     next_player
+  end
 
-    true
+  # Checks all game possibilities and returns true if game won or false if not
+  def game_over?
+    if (type = check_patterns)
+      update(win_type: type)
+    elsif moves == 9
+      update(win_type: { pattern: [], name: 'Tie' }.to_json)
+    end
+
+    !win_type.nil?
+  end
+
+  # Returns the game winner
+  def winner
+    next_player
+
+    current_player
   end
 
   private
@@ -44,8 +67,31 @@ class Game < ApplicationRecord
   end
 
   def set_current_player
-    first_player = players.select { |player| player.symbol == 'X' }
+    first_player = players.find { |player| player.symbol == 'X' }
 
     update(current_player: first_player)
+  end
+
+  # Iterate over each finish type pattern and return finish type if any
+  def check_patterns
+    finish_type = nil
+
+    FINISH_TYPES.each do |type|
+      line = type[:patterns].find { |l| check_line(l) }
+
+      next if line.nil?
+
+      finish_type = { pattern: line, name: type[:name] }.to_json
+      break
+    end
+
+    finish_type
+  end
+
+  # check if line passed has only X or O to determine if game is over
+  def check_line(pattern)
+    spots = pattern.map { |spot_num| board[spot_num] }
+
+    spots.none?(&:nil?) && spots.uniq.length == 1
   end
 end
