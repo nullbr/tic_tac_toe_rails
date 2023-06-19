@@ -4,23 +4,25 @@ class Game < ApplicationRecord
   enum :mode, ['2 Players', 'Multiplayer', 'Player vs Computer', 'Computer vs Computer']
   enum :level, %w[Noobie Expert]
 
-  has_many :user_games, dependent: :destroy
-  has_many :users, through: :user_games, dependent: :destroy
-
   has_many :game_players, dependent: :destroy
   has_many :players, through: :game_players, dependent: :destroy
+
+  belongs_to :current_player, class_name: 'Player'
+
+  after_create :set_current_player
 
   # returns false if input is invalid
   # return true and calls next player if valid
   def input_to_board(spot)
     return false unless spot_valid?(spot)
 
-    board[spot] = @current_player.symbol
+    board[spot.to_i] = current_player.symbol
+    self.moves = moves + 1
 
-    @moves += 1
+    save
 
     # calls next player
-    next_player
+    # next_player
 
     true
   end
@@ -32,5 +34,11 @@ class Game < ApplicationRecord
     /^\d$/.match?(spot) &&
       spot.to_i.between?(0, 8) &&
       !%w[X O].include?(board[spot.to_i])
+  end
+
+  def set_current_player
+    first_player = players.select { |player| player.symbol == 'X' }
+
+    update(current_player: first_player)
   end
 end

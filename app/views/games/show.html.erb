@@ -1,17 +1,17 @@
 <div class="grid divide-y-2 divide-gray-300 text-gray-500">
   <div class="grid grid-cols-3 divide-x-2 divide-gray-300">
     <% @row1.each_with_index do |spot, idx| %>
-      <%= button_to spot || "&nbsp;&nbsp;".html_safe, game_update_board_path(@game, index: idx), class: "p-10" %>
+      <%= button_to spot || "&nbsp;&nbsp;".html_safe, game_update_board_path(@game, spot: idx), class: "p-10" %>
     <% end %>
   </div>
   <div class="grid grid-cols-3 divide-x-2 divide-gray-300">
     <% @row2.each_with_index do |spot, idx| %>
-      <%= button_to spot || "&nbsp;&nbsp;".html_safe, game_update_board_path(@game, index: idx), class: "p-10" %>
+      <%= button_to spot || "&nbsp;&nbsp;".html_safe, game_update_board_path(@game, spot: idx + 3), class: "p-10" %>
     <% end %>
   </div>
   <div class="grid grid-cols-3 divide-x-2 divide-gray-300">
     <% @row3.each_with_index do |spot, idx| %>
-      <%= button_to spot || "&nbsp;&nbsp;".html_safe, game_update_board_path(@game, index: idx), class: "p-10" %>
+      <%= button_to spot || "&nbsp;&nbsp;".html_safe, game_update_board_path(@game, spot: idx + 6), class: "p-10" %>
     <% end %>
   </div>
 </div>

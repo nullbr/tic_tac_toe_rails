@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_234912) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_19_190714) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,9 +31,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_234912) do
     t.datetime "start_at"
     t.datetime "end_at"
     t.text "board", default: [nil, nil, nil, nil, nil, nil, nil, nil, nil], array: true
-    t.bigint "current_player"
     t.string "win_type"
-    t.integer "moves"
+    t.integer "moves", default: 0
+    t.integer "current_player_id"
   end
 
   create_table "players", force: :cascade do |t|
