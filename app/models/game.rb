@@ -30,10 +30,14 @@ class Game < ApplicationRecord
 
     # calls next player
     next_player
+
+    true
   end
 
   # Checks all game possibilities and returns true if game won or false if not
   def game_over?
+    return true unless win_type.nil?
+
     if (type = check_patterns)
       update(win_type: type)
     elsif moves == 9

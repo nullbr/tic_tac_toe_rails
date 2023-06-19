@@ -1,0 +1,29 @@
+<%= turbo_frame_tag @game do %>
+  <div class="flex flex-col gap-4 text-slate-400 text-center text-lg">
+    <% if @game.game_over? %>
+      <h2>Game Over!</h2>
+    <% end %>
+    <div class="grid divide-y-2 divide-gray-200">
+      <% @rows.each_with_index do |row, row_idx| %>
+        <div class="grid grid-cols-3 divide-x-2 divide-gray-200">
+          <% row.each_with_index do |spot, idx| %>
+            <% spot_num = idx + (row_idx * 3) %>
+            <%= button_to spot || "&nbsp;&nbsp;".html_safe,
+                game_update_board_path(@game, spot: spot_num),
+                { 
+                  class: "p-10 hover:shadow-inner #{'bg-green-200' if @game.game_over? && @win_pattern.include?(spot_num)}",
+                  disabled: @game.game_over? || !spot.nil?
+                } %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% if @game.game_over? %>
+      <h3><%= @game.winner.username || @game.winner.symbol %> has won!</h3>
+    <% else %>
+      <h3>
+        It's <%= @game.current_player.username || @game.current_player.symbol %>'s
+      </h3>
+    <% end %>
+  </div>
+<% end %>

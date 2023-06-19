@@ -5,11 +5,8 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @rows = @game.board.each_slice(3)
 
-    return unless (@game_over = @game.game_over?)
-
-    @win_pattern = JSON.parse(@game.win_type)['pattern']
+    board_details
   end
 
   def new
@@ -29,14 +26,29 @@ class GamesController < ApplicationController
 
   def update_board
     @game = Game.find(params[:game_id])
-    @game.input_to_board(params[:spot])
 
-    redirect_to @game
+    return unless @game.input_to_board(params[:spot])
+
+    board_details
+
+    render partial: 'games/game',
+           locals: {
+             game: @game,
+             win_pattern: @win_pattern
+           }
   end
 
   private
 
   def game_params
     params.require(:game).permit(:mode, :level)
+  end
+
+  def board_details
+    @rows = @game.board.each_slice(3)
+
+    return unless (@game_over = @game.game_over?)
+
+    @win_pattern = JSON.parse(@game.win_type)['pattern']
   end
 end
