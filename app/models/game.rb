@@ -22,12 +22,19 @@ class Game < ApplicationRecord
     save
 
     # calls next player
-    # next_player
+    next_player
 
     true
   end
 
   private
+
+  # checks who is current player and sets it to the other player
+  def next_player
+    player = current_player == players[0] ? players[1] : players[0]
+
+    update(current_player: player)
+  end
 
   # Check if spot is only a number, between 0 and 8 and not taken
   def spot_valid?(spot)
