@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   def require_signin
     return if signed_in?
 
+    flash.now[:alert] = 'You must be logged in first'
     session[:intended_url] = request.url
     redirect_to signin_url
   end
@@ -17,7 +18,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_player
-    @current_user ||= Player.find(session[:player_id]) if session[:player_id]
+    if session[:player_id]
+      @current_player ||= Player.find(session[:player_id])
+    elsif session[:user_id]
+      @current_player ||= User.find(session[:user_id]).player
+    end
   end
 
   helper_method :current_player
