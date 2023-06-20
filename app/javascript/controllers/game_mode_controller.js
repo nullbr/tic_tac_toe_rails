@@ -5,7 +5,10 @@ export default class extends Controller {
   static targets = ["level", "mode"];
 
   eval() {
-    if (this.modeTarget.value === "2" || this.modeTarget.value === "3")
-      this.levelTarget.classList.remove("hidden");
+    if (this.modeTarget.value === "2" || this.modeTarget.value === "3") {
+      this.levelTarget.style.display = "block";
+    } else {
+      this.levelTarget.style.display = "none";
+    }
   }
 }

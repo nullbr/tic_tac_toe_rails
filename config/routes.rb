@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   root 'games#index'
 
-  resource :session, only: %i[new create]
+  resource :session, only: %i[new create] do
+    get 'create_guest' => 'sessions#create_guest'
+  end
   get 'signin' => 'sessions#new'
   get 'signout' => 'sessions#signout'
 

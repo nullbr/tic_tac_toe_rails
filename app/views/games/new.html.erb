@@ -6,8 +6,8 @@
   <%= form_with(model: @game, class: "user-form", data: { controller: "game-mode", action: "input->game-mode#eval" } ) do |f| %>
     <%= f.label :mode %>
     <%= f.select :mode, Game.modes, { autofocus: true, required: true }, data: { game_mode_target: "mode" } %>
-    <div class="hidden" data-game-mode-target="level">
-      <%= f.label :level %>
+    <div data-game-mode-target="level" style="display: none" >
+      <%= f.label :level, "Machine Level" %>
       <%= f.select :level, Game.levels, selected: nil %>
     </div>
     <%= f.submit "Start Game" %>

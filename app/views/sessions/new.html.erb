@@ -1,9 +1,12 @@
 <div class="flex flex-col gap-2">
   <h2>Sign In</h2>
   <h3 class="text-slate-400 text-center text-lg">
-    No account yet? <%= link_to "Sign up!", signup_path %>
+    No account yet?
   </h3>
-  <%= form_with(url: session_path, class: "user-form") do |f| %>
+  <h3 class="text-slate-400 text-center text-lg">
+    <%= link_to "Sign up", signup_path %> or enter as <%= link_to "Guest", create_guest_session_path %>
+  </h3>
+  <%= form_with(url: session_path, class: "user-form w-full") do |f| %>
     <%= f.label :username %>
     <%= f.text_field :username, autofocus: true, required: true %>
     <%= f.label :password %>

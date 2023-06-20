@@ -7,4 +7,6 @@ class Player < ApplicationRecord
 
   has_many :game_players, dependent: :destroy
   has_many :games, through: :game_players, dependent: :destroy
+
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
 end

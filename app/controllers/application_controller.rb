@@ -16,8 +16,14 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  def current_player
+    @current_user ||= Player.find(session[:player_id]) if session[:player_id]
+  end
+
+  helper_method :current_player
+
   def signed_in?
-    !current_user.nil?
+    !current_user.nil? || !current_player.nil?
   end
 
   helper_method :signed_in?

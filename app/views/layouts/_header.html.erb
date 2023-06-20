@@ -3,7 +3,7 @@
     <ul class="flex justify-end gap-2 pt-2 px-4 text-slate-300">
       <% if signed_in? %>
         <li>
-          <%= nav_link_to current_user.username, current_user %>
+          <%= current_user ? (nav_link_to current_user.username, current_user) : current_player.username %>
         </li>
         <li>
           <%= nav_link_to "Sign Out", signout_path %>

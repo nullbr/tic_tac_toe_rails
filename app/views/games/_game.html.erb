@@ -22,7 +22,7 @@
       <h3><%= @game.winner.username || @game.winner.symbol %> has won!</h3>
     <% else %>
       <h3>
-        It's <%= @game.current_player.username || @game.current_player.symbol %>'s
+        It's <%= @game.current_player.username || @game.current_player.symbol %>'s turn
       </h3>
     <% end %>
   </div>
