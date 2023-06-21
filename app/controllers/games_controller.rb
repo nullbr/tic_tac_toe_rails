@@ -2,7 +2,7 @@
 
 class GamesController < ApplicationController
   before_action :require_signin, only: %i[new create update_board]
-  before_action :set_game, only: %i[show update_board]
+  before_action :set_game, only: %i[show update_board play_again]
   before_action :ensure_correct_user, only: %i[update_board]
 
   def index; end
@@ -21,7 +21,7 @@ class GamesController < ApplicationController
     )
 
     if @game.save
-      prepare_game
+      prepare_players
       redirect_to @game
     else
       flash.now[:alert] = @game.errors.full_messages.first
@@ -42,6 +42,20 @@ class GamesController < ApplicationController
     end
   end
 
+  def play_again
+    new_game = Game.new(
+      start_at: Time.zone.now, mode: @game.mode, level: @game.level,
+      game_players: @game.game_players, current_player: @game.current_player
+    )
+
+    if new_game.save
+      redirect_to game_path(new_game)
+    else
+      flash.now[:alert] = new_game.errors.full_messages.first
+      render :show
+    end
+  end
+
   private
 
   def game_params
@@ -49,19 +63,21 @@ class GamesController < ApplicationController
   end
 
   def set_game
-    @game = Game.find(params[:id] || params[:game_id])
+    @game = Game.find_by(id: params[:id] || params[:game_id])
+
+    return if @game
+
+    redirect_to root_url, alert: 'The game you are looking for does not exist'
   end
 
   def ensure_correct_user
-    p current_player
-    p @game.current_player
     return if Game.modes[@game.mode].zero? || signed_in? && current_player == @game.current_player
 
     flash.now[:alert] = "It's not your turn"
     render :flash
   end
 
-  def prepare_game
+  def prepare_players
     case Game.modes[@game.mode]
     when 0
       player2 = Player.find_or_create_by(username: 'Player 2')

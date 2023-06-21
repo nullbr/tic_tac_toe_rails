@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       flash.now[:notice] = 'Logged in successfully'
 
       redirect_to session[:intended_url] || user
-      session[:intended_url]
+      session[:intended_url] = nil
     else
       flash.now[:alert] = 'Username or email was wrong'
       render :new, status: :unprocessable_entity

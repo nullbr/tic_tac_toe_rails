@@ -19,7 +19,11 @@
       <% end %>
     </div>
     <% if game.game_over? %>
-      <h3><%= game.current_player.username %> has won!</h3>
+      <h3>
+        <%= game.current_player.username %> has won!
+        <%= link_to 'Play again', game_play_again_path(game),
+          data: { turbo: false } %>
+      </h3>
     <% else %>
       <h3>
         It's <%= game.current_player.username %>'s turn
