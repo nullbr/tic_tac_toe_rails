@@ -1,1 +1,2 @@
-<%= render "games/game", game: @game, win_pattern: @win_pattern %>
+<%= turbo_stream_from "game" %>
+<%= render "games/game", game: @game %>

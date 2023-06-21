@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Game < ApplicationRecord
+  include ActionView::RecordIdentifier
+  include GamesHelper
+
   enum :mode, ['2 Players', 'Online', 'Player vs Computer', 'Computer vs Computer']
   enum :level, %w[Noobie Expert]
 
@@ -8,6 +11,13 @@ class Game < ApplicationRecord
   has_many :players, through: :game_players, dependent: :destroy
 
   belongs_to :current_player, class_name: 'Player', optional: true
+
+  after_update_commit lambda {
+    broadcast_update_later_to 'game',
+                              target: dom_id(self),
+                              partial: 'games/game',
+                              locals: { game: self, win_pattern: win_pattern(self) }
+  }
 
   # Determine the possible types of game finish
   FINISH_TYPES = [
@@ -27,7 +37,7 @@ class Game < ApplicationRecord
     save
 
     # calls next player
-    next_player
+    next_player unless game_over?
 
     true
   end
@@ -37,19 +47,12 @@ class Game < ApplicationRecord
     return true unless win_type.nil?
 
     if (type = check_patterns)
-      update(win_type: type)
+      update(win_type: type, end_at: Time.zone.now)
     elsif moves == 9
-      update(win_type: { pattern: [], name: 'Tie' }.to_json)
+      update(win_type: { pattern: [], name: 'Tie', end_at: Time.zone.now }.to_json)
     end
 
     !win_type.nil?
-  end
-
-  # Returns the game winner
-  def winner
-    next_player
-
-    current_player
   end
 
   private

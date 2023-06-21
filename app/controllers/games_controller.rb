@@ -9,8 +9,6 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-
-    board_details
   end
 
   def new
@@ -32,15 +30,16 @@ class GamesController < ApplicationController
   end
 
   def update_board
-    return unless @game.input_to_board(params[:spot])
-
-    board_details
-
-    render partial: 'games/game',
-           locals: {
-             game: @game,
-             win_pattern: @win_pattern
-           }
+    if @game.input_to_board(params[:spot])
+      render partial: 'games/game',
+             locals: {
+               game: @game,
+               win_pattern: @win_pattern
+             }
+    else
+      flash.now[:alert] = 'Invalid spot'
+      render :flash
+    end
   end
 
   private
@@ -54,18 +53,12 @@ class GamesController < ApplicationController
   end
 
   def ensure_correct_user
+    p current_player
+    p @game.current_player
     return if Game.modes[@game.mode].zero? || signed_in? && current_player == @game.current_player
 
     flash.now[:alert] = "It's not your turn"
     render :flash
-  end
-
-  def board_details
-    @rows = @game.board.each_slice(3)
-
-    return unless (@game_over = @game.game_over?)
-
-    @win_pattern = JSON.parse(@game.win_type)['pattern']
   end
 
   def prepare_game
