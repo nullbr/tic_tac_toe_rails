@@ -6,7 +6,7 @@ class Game < ApplicationRecord
   include ActionView::RecordIdentifier
   include GamesHelper
 
-  enum :mode, ['2 Players', 'Online', 'Player vs Computer', 'Computer vs Computer']
+  enum :mode, ['2 Players', 'Online'] # , 'Player vs Computer', 'Computer vs Computer']
   enum :level, %w[Noobie Expert]
 
   has_many :game_players, dependent: :destroy

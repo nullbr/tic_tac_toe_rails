@@ -1,11 +1,13 @@
 <%= turbo_frame_tag game do %>
   <% if game.invitation_token && current_user == game.players&.first&.user %>
     <h2>Waiting</h2>
-    <h3 class="text-slate-400 text-center text-lg">
+    <h3 class="pt-4 text-slate-400 text-center text-lg">
       To start the game copy and share this link with second player:
     </h3>
     <h3 class="text-slate-400 text-center text-lg">
-      <%= game_invite_url(game.invitation_token) %>
+      <%= button_tag game.invitation_token, 
+        class: 'hover:scale-110 focus:text-green-600 hover:text-primary text-blue-300 duration-500', 
+        data: { controller: 'clipboard', clipboard_link_value: game_invite_url(game.invitation_token) } %>
     </h3>
   <% else %>
     <div class="flex flex-col gap-4 text-slate-400 text-center text-lg">

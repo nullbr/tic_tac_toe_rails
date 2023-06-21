@@ -59,11 +59,12 @@ class GamesController < ApplicationController
   def invite
     @game = Game.find_by(invitation_token: params[:invitation_token])
 
-    if @game
+    if @game && @game.game_players.find_by(player: current_player).nil?
       @game.game_players.create(player: current_player, symbol: 'O')
       @game.update(invitation_token: nil)
-
       redirect_to game_path(@game), notice: "Let's play!"
+    elsif @game
+      redirect_to game_path(@game), notice: 'You are already in this game'
     else
       redirect_to root_url, alert: 'Invalid invitation link'
     end
