@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :require_signin, only: %i[new create update_board]
+  before_action :require_signin, except: %i[index show]
   before_action :set_game, only: %i[show update_board play_again]
   before_action :ensure_correct_user, only: %i[update_board]
 
@@ -21,7 +21,7 @@ class GamesController < ApplicationController
     )
 
     if @game.save
-      prepare_players
+      prepare_game
       redirect_to @game
     else
       flash.now[:alert] = @game.errors.full_messages.first
@@ -56,10 +56,23 @@ class GamesController < ApplicationController
     end
   end
 
+  def invite
+    @game = Game.find_by(invitation_token: params[:invitation_token])
+
+    if @game
+      @game.game_players.create(player: current_player, symbol: 'O')
+      @game.update(invitation_token: nil)
+
+      redirect_to game_path(@game), notice: "Let's play!"
+    else
+      redirect_to root_url, alert: 'Invalid invitation link'
+    end
+  end
+
   private
 
   def game_params
-    params.require(:game).permit(:mode, :level, :player_2_id)
+    params.require(:game).permit(:mode, :level)
   end
 
   def set_game
@@ -77,7 +90,7 @@ class GamesController < ApplicationController
     render :flash
   end
 
-  def prepare_players
+  def prepare_game
     case Game.modes[@game.mode]
     when 0
       player2 = Player.find_or_create_by(username: 'Player 2')
@@ -85,8 +98,7 @@ class GamesController < ApplicationController
 
       @game.update(current_player:)
     when 1
-      player2 = Player.find(game_params[:player_2_id].to_i)
-      @game.game_players.create([{ player: player2, symbol: 'O' }, { player: current_player, symbol: 'X' }])
+      @game.game_players.create(player: current_player, symbol: 'X')
 
       @game.update(current_player:)
     end

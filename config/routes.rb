@@ -16,4 +16,6 @@ Rails.application.routes.draw do
     post 'update_board'
     get 'play_again'
   end
+
+  get 'games/invite/:invitation_token', to: 'games#invite', as: 'game_invite'
 end

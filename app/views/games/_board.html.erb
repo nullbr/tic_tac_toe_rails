@@ -1,0 +1,15 @@
+<div class="grid divide-y-2 divide-gray-200">
+  <% board_rows(game).each_with_index do |row, row_idx| %>
+    <div class="grid grid-cols-3 divide-x-2 divide-gray-200">
+      <% row.each_with_index do |spot, idx| %>
+        <% spot_num = idx + (row_idx * 3) %>
+        <%= button_to spot || "&nbsp;&nbsp;".html_safe,
+                  game_update_board_path(game, spot: spot_num),
+                  { 
+                    class: class_for_spot(spot_num, game),
+                    disabled: game.game_over? || !spot.nil?
+                  } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

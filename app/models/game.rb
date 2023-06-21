@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 class Game < ApplicationRecord
   include ActionView::RecordIdentifier
   include GamesHelper
@@ -12,6 +14,7 @@ class Game < ApplicationRecord
 
   belongs_to :current_player, class_name: 'Player', optional: true
 
+  after_create :generate_invitation_token
   after_update_commit lambda {
     broadcast_update_later_to 'game',
                               target: dom_id(self),
@@ -56,6 +59,14 @@ class Game < ApplicationRecord
   end
 
   private
+
+  # generate invitation token for invited player access
+  def generate_invitation_token
+    # return unless game mode is online
+    return unless Game.modes[mode] == 1
+
+    update(invitation_token: SecureRandom.urlsafe_base64)
+  end
 
   # checks who is current player and sets it to the other player
   def next_player

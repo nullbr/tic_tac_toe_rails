@@ -10,10 +10,6 @@
       <%= f.label :level, "Machine Level" %>
       <%= f.select :level, Game.levels, selected: nil %>
     </div>
-    <div data-game-mode-target="player" style="display: none" >
-      <%= f.label :player_2_id, "Invite a Player" %>
-      <%= f.text_field :player_2_id %>
-    </div>
     <%= f.submit "Start Game" %>
   <% end %>
 </div>
