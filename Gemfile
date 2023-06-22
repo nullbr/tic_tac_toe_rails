@@ -12,7 +12,7 @@ gem 'rails', '~> 7.0.5'
 gem 'sprockets-rails'
 
 # Use postgres as the database for Active Record
-gem 'dotenv-rails'
+gem 'dotenv-rails', '~> 2.7.6'
 gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
@@ -65,6 +65,14 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
+
+  # Production deploy with capistrano
+  gem 'bcrypt_pbkdf', '1.1.0'
+  gem 'capistrano', '3.17.2'
+  gem 'capistrano-passenger', '0.2.1'
+  gem 'capistrano-rails', '1.6.2'
+  gem 'capistrano-rbenv', '2.2.0'
+  gem 'ed25519', '1.3.0'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
