@@ -21,7 +21,7 @@
   /* Links */
 
   a {
-    @apply hover:scale-110 hover:text-primary text-blue-300 duration-500;
+    @apply hover:text-primary text-blue-300 duration-500 hover:scale-110;
   }
 
   /* Buttons */

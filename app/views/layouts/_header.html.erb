@@ -1,27 +1,68 @@
-<header class="absolute top-0 left-0 w-screen p-4">
-  <nav class="flex justify-between">
-    <ul class="flex gap-2 text-slate-300">
-      <% if signed_in? %>
-        <li>
+<header>
+  <nav class='lg:grid lg:grid-cols-3 justify-between lg:justify-normal flex px-4 py-4'>
+    <div class='hidden lg:flex justify-between items-center'>
+      <div class="flex gap-2">
+        <% if signed_in? %>
           <%= current_user ? (nav_link_to current_user.username, current_user) : current_player.username %>
-        </li>
-        <li>
           <%= nav_link_to "Sign Out", signout_path %>
-        </li>
-      <% else %>
-        <li>
+        <% else %>
           <%= nav_link_to "Sign In", signin_path %>
-        </li>
-        <li>
           <%= nav_link_to "Sign Up", signup_path %>
-        </li>
-      <% end %>
-    </ul>
-    <div class="text-3xl flex justify-center items-center uppercase font-bold text-primary">tic tac toe</div>
-    <ul class="flex gap-2 text-slate-300">
-      <li>
-        <%= button_to 'New Game', new_game_path, { class: 'btn bg-green-600', method: 'get' } %>
-      </li>
-    </ul>
-  </nav>
+        <% end %>
+      </div>
+    </div>
+    <div class='flex lg:justify-center justify-start items-center'>
+      <%= link_to 'tic tac toe', root_path, 
+          class: 'lg:text-5xl text-2xl uppercase font-bold bg-gradient-to-b from-blue-500 via-cyan-400 to-green-400 bg-clip-text text-transparent hover:scale-100' %>
+    </div>
+    <div class='hidden lg:flex justify-end items-center'>
+      <%= button_to 'New Game', new_game_path, { class: "btn border-2 border-blue-300 w-28 bg-transparent text-blue-300 hover:text-white", method: 'get' } %>
+    </div>
+    <div class='lg:hidden flex justify-end items-center'>
+      <%# new game button %>
+      <%= button_to '+', new_game_path, { class: "btn border-2 border-blue-300 w-11 h-11 p-0 rounded-lg bg-transparent text-xl text-blue-300 hover:text-white", method: 'get' } %>
+      <%# sessions button %>
+      <div class="relative" data-controller='dropdown'>
+        <button data-dropdown-target='button' data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-blue-300 rounded-lg border-2 border-blue-300 lg:hidden hover:text-white focus:bg-blue-300 focus:text-white" aria-controls="navbar-default" aria-expanded="false">
+          <span class="sr-only">Profile Menu</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
+        </button>
+        <!-- Dropdown menu -->
+        <div data-dropdown-target='dropdown' id="dropdownNavbar" class="hidden absolute top-22 right-0 z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ml-3 dark:bg-gray-700 dark:divide-gray-600">
+          <% if signed_in? %>
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+              <li>
+                <p class='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
+                  <%= current_user ? (nav_link_to current_user.username, current_user) : current_player.username %>
+                </p>
+              </li>
+              <li>
+                <%= link_to "Sign Out", signout_path, class: 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' %>
+              </li>
+            </ul>
+            <div class="py-1">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Sign out</a>
+            </div>
+          <% else %>
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+              <li>
+                <%= link_to "Sign In", signin_path, class: 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' %>
+              </li>
+              <li>
+                <%= link_to "Sign Up", signup_path, class: 'block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white' %>
+              </li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+      <%# menu button %>
+      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-blue-300 rounded-lg border-2 border-blue-300 lg:hidden hover:text-white" aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+      </button>
+    </div>
+  </div>
+</nav>
 </header>
