@@ -12,4 +12,4 @@ set :branch, 'main'
 # Deploy to the user's home directory
 set :deploy_to, "/home/nullbr/#{fetch :application}"
 
-append :linked_files, 'config/master.key', '.env.production'
+append :linked_files, 'config/master.key', '.env'

@@ -9,7 +9,7 @@ namespace :deploy do
                   "#{shared_path}/config/master.key"
         end
 
-        upload! '.env.production', "#{shared_path}/.env.production"
+        upload! '.env', "#{shared_path}/.env"
       end
     end
   end
