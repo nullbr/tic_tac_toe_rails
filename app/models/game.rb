@@ -13,6 +13,7 @@ class Game < ApplicationRecord
   has_many :players, through: :game_players, dependent: :destroy
 
   belongs_to :current_player, class_name: 'Player', optional: true
+  belongs_to :next_game, class_name: 'Game', optional: true
 
   after_create :generate_invitation_token
   after_update_commit lambda {

@@ -45,10 +45,13 @@ class GamesController < ApplicationController
   def play_again
     new_game = Game.new(
       start_at: Time.zone.now, mode: @game.mode, level: @game.level,
-      game_players: @game.game_players, current_player: @game.current_player
+      players: @game.players, current_player: @game.current_player
     )
 
     if new_game.save
+      @game.update(next_game_id: new_game.id)
+      new_game.update(invitation_token: nil)
+
       redirect_to game_path(new_game)
     else
       flash.now[:alert] = new_game.errors.full_messages.first
