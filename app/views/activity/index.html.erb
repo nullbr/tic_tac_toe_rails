@@ -1,5 +1,5 @@
 <%= turbo_stream_from "activity" %>
-<div id="games">
+<div class='text-slate-400' id="games">
   <%= turbo_frame_tag "games_page_#{@pagy.page}" do %>
     <%= render collection: @games,
                partial: "activity/game" %>
