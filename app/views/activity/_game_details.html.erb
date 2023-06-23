@@ -1,14 +1,14 @@
 <%= tag.div class: "details", id: "#{dom_id(game)}_details" do %>
-  <a class="game_link" href="<%= game_path(game) %>">
+  <%= link_to game_path(game), data: { turbo_frame: '_top' } do %>
     <div>
       <span class="user">
-        <%= game.players&.first&.username %>
+        <%= game.players&.first&.username || 'Player 1' %>
       </span>
       <%= game.end_at? ? 'is playing' : 'played' %> aganist
       <span class="user">
-        <%= game.players&.last&.username %>
+        <%= game.players&.last&.username || 'Player 2' %>
       </span>
       <%= time_ago_in_words(game.start_at) %> ago
     </div>
-  </a>
+  <% end %>
 <% end %>
