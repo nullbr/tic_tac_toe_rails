@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include Pagy::Frontend
+
   def nav_link_to(text, url, options = {})
     link_to(text, url, options.merge(class: nav_link_class(url)))
   end

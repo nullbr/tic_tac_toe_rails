@@ -1,0 +1,12 @@
+<%= turbo_stream_from "activity" %>
+<div id="games">
+  <%= turbo_frame_tag "games_page_#{@pagy.page}" do %>
+    <%= render collection: @games,
+               partial: "activity/game" %>
+    <% if @pagy.next %>
+      <%= turbo_frame_tag "games_page_#{@pagy.next}", src: games_path(page: @pagy.next), loading: :lazy do %>
+        <div class="loader">Loading...</div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

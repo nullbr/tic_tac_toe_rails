@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :require_signin, except: %i[index show]
+  before_action :require_signin, except: :show
   before_action :set_game, only: %i[show update_board play_again]
   before_action :ensure_correct_user, only: %i[update_board]
-
-  def index; end
 
   def show
     @game = Game.find(params[:id])

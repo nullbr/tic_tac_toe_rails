@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "#{dom_id(game)}_likes" do %>
+  <% if like = game.my_like %>
+    <%= button_to game_like_path(game, like), method: :delete do %>
+      <%= image_tag("full-heart.svg") %>
+      <%= tag.div id: "#{dom_id(game)}_likes_count" do %>
+        <%= game.likes_count %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= button_to game_likes_path(game) do %>
+      <%= image_tag("empty-heart.svg") %>
+      <%= tag.div id: "#{dom_id(game)}_likes_count" do %>
+        <%= game.likes_count %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
