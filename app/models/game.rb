@@ -19,6 +19,11 @@ class Game < ApplicationRecord
   belongs_to :next_game, class_name: 'Game', optional: true
 
   after_create :generate_invitation_token
+
+  after_create_commit lambda {
+    broadcast_prepend_later_to 'activity', target: 'games',
+                                           partial: 'activity/game'
+  }
   after_update_commit lambda {
     broadcast_update_later_to 'game',
                               target: dom_id(self),
