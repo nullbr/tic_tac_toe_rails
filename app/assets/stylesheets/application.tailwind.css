@@ -153,4 +153,51 @@
       opacity: 1;
     }
   }
+
+  /* Activity Index Page */
+
+  .activity_index {
+    @apply mx-auto max-w-4xl bg-white text-base text-gray-800 h-full;
+
+    & .game {
+      @apply w-full py-6 border-b border-gray-200 sm:flex sm:items-center space-y-6 sm:space-y-0 sm:justify-between;
+
+      & .details {
+        @apply text-center pr-2 sm:flex sm:items-center sm:space-x-6 sm:text-left;
+
+        & .user,
+        & .species,
+        & .weight,
+        & .length {
+          @apply font-bold;
+        }
+
+        & a {
+          @apply hover:text-primary text-slate-400 duration-500 hover:scale-100;
+        }
+      }
+
+      & button {
+        @apply sm:ml-auto text-center sm:flex-shrink-0 tabular-nums whitespace-nowrap;
+
+        & div {
+          @apply inline;
+        }
+
+        & img {
+          @apply h-6 w-6 inline-block hover:scale-110;
+        }
+      }
+
+      & button[type="submit"],
+      & input[type="submit"] {
+        @apply border-none rounded-none shadow-none bg-transparent text-base text-gray-700;
+      }
+
+      & button[type="submit"]:focus,
+      & input[type="submit"]:focus {
+        @apply ring-0 ring-offset-0 border-0 outline-none;
+      }
+    }
+  }
 }

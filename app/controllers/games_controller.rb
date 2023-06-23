@@ -1,9 +1,16 @@
 # frozen_string_literal: true
 
 class GamesController < ApplicationController
-  before_action :require_signin, except: :show
+  before_action :require_signin, except: %i[index show]
   before_action :set_game, only: %i[show update_board play_again]
   before_action :ensure_correct_user, only: %i[update_board]
+
+  def index
+    @pagy, @games = pagy(Game.order(created_at: :desc).includes(:players), items: params[:per_page] ||= 5,
+                                                                           link_extra: 'data-turbo-action="advance"')
+
+    @games = current_player.assign_my_likes_to_games(@games) if current_player
+  end
 
   def show
     @game = Game.find(params[:id])

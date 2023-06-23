@@ -1,10 +1,10 @@
 <%= turbo_stream_from "activity" %>
-<div class='text-slate-400' id="games">
+<div class='activity_index text-slate-400' id="games">
   <%= turbo_frame_tag "games_page_#{@pagy.page}" do %>
     <%= render collection: @games,
                partial: "activity/game" %>
     <% if @pagy.next %>
-      <%= turbo_frame_tag "games_page_#{@pagy.next}", src: games_path(page: @pagy.next), loading: :lazy do %>
+      <%= turbo_frame_tag "games_page_#{@pagy.next}", src: root_path(page: @pagy.next), loading: :lazy do %>
         <div class="loader">Loading...</div>
       <% end %>
     <% end %>

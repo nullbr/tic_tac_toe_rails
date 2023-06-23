@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :users, except: [:index]
   get 'signup' => 'users#new'
 
-  resources :games, only: %i[new create show] do
+  resources :games, only: %i[index new create show] do
     resources :likes
 
     post 'update_board'

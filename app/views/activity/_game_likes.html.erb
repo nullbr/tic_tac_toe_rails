@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "#{dom_id(game)}_likes" do %>
+<div id="<%= dom_id(game) %>_likes">
   <% if like = game.my_like %>
     <%= button_to game_like_path(game, like), method: :delete do %>
       <%= image_tag("full-heart.svg") %>
@@ -14,4 +14,4 @@
       <% end %>
     <% end %>
   <% end %>
-<% end %>
+</div>

@@ -1,10 +1,14 @@
 <%= tag.div class: "details", id: "#{dom_id(game)}_details" do %>
-  <div>
-    <span class="user">
-      <%= game.players&.first&.username %>
-    </span>
-    <span class="user">
-      <%= game.players&.last&.username %>
-    </span>
-  </div>
+  <a class="game_link" href="<%= game_path(game) %>">
+    <div>
+      <span class="user">
+        <%= game.players&.first&.username %>
+      </span>
+      <%= game.end_at? ? 'is playing' : 'played' %> aganist
+      <span class="user">
+        <%= game.players&.last&.username %>
+      </span>
+      <%= time_ago_in_words(game.start_at) %> ago
+    </div>
+  </a>
 <% end %>
